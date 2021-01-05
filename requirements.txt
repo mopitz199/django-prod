@@ -1,0 +1,8 @@
+Django>=3.0,<4.0
+djangorestframework==3.12.2
+pytest-django==4.1.0 # for testing
+model-bakery==1.2.1 # for dummy models
+pytest-cov==2.10.1 # for coverage
+boto3==1.16.34 # for s3 manipultaion
+django-storages==1.10.1 # for s3 static and media files
+python-dotenv==0.15.0 # for env in .env file
