@@ -2,14 +2,9 @@ from djangoprod.settings import *
 
 DEBUG = False
 
-STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage' # To allow django-admin collectstatic to automatically put your static files in your bucket
+AWS_QUERYSTRING_AUTH = False # To hide credentials in the aws urls for static and media files (django-storage)
 
-MEDIAFILES_LOCATION = ''
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage' # To upload your media files to S3
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage' # To upload your media files to S3 (django-storage)
 
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-AWS_DEFAULT_ACL = None
-AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
+STATICFILES_LOCATION = 'static' # save all the static files in the static folder ini aws for collectstatic (django-storage)
+STATICFILES_STORAGE = 'custom_storages.StaticStorage' # To allow django-admin collectstatic to automatically put your static files in your bucket (django-storage)

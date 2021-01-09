@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv
-load_dotenv()
+from dotenv import load_dotenv  # dotenv to handle env variables in a .env file
+load_dotenv()  # load the .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages', # To handle files with S3
     'file_app',
+    'website',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +123,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/' # add not prefix in the url of the media file
 
-MEDIA_BASE_PATH = 'media/'
+MEDIA_URL = '/' #  add not prefix in the url of the media file (django)
+MEDIA_BASE_PATH = 'media/' #  save all the media file in the a media folder in the root project (custom)
+MEDIAFILES_LOCATION = '' #  do not use any deefault location (django-storage)
+
+STATIC_URL = '/static/' #  (django)
+STATICFILES_DIRS = [BASE_DIR / "static",] #  (django)
+
+# More django-storage settings
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_DEFAULT_ACL = None
+AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
