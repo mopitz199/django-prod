@@ -25,6 +25,8 @@ services:
       - "${PORT}:${PORT}"
     volumes:
       - .:/code
+    depends_on:
+      - db
     networks:
       - web
     labels:
