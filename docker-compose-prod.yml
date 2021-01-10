@@ -1,7 +1,25 @@
 version: "3.8"
+
+volumes:
+  pgdata:
+
 services:
+  db:
+    build:
+      dockerfile: docker/postgres/Dockerfile
+      context: .
+    environment:
+      POSTGRES_DB: "${DATABASE_HOST}"
+      POSTGRES_USER: "${DATABASE_USER}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5435:5432
   api:
-    build: .
+    build:
+      dockerfile: docker/api/Dockerfile
+      context: .
     command: sh -c "python manage.py migrate && gunicorn --env DJANGO_SETTINGS_MODULE=djangoprod.settings-prod djangoprod.wsgi -b 0.0.0.0:${PORT}"
     ports:
       - "${PORT}:${PORT}"
