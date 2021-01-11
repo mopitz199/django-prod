@@ -16,6 +16,8 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - 5435:5432
+    networks:
+      - main
   api:
     build:
       dockerfile: docker/api/Dockerfile
@@ -28,7 +30,7 @@ services:
     depends_on:
       - db
     networks:
-      - web
+      - main
     labels:
       #### Labels define the behavior and rules of the traefik proxy for this container ####
       - "traefik.enable=true" # <== Enable traefik to proxy this container
@@ -58,7 +60,7 @@ services:
       - --providers.docker=true # <== Enabling docker as the provider for traefik
       - --providers.docker.exposedbydefault=false # <== Don't expose every container to traefik, only expose enabled ones
       - --providers.file.filename=/dynamic.yaml # <== Referring to a dynamic configuration file
-      - --providers.docker.network=web # <== Operate on the docker network named web
+      - --providers.docker.network=main # <== Operate on the docker network named web
       ## Entrypoints Settings - https://docs.traefik.io/routing/entrypoints/#configuration ##
       - --entrypoints.web.address=:80 # <== Defining an entrypoint for port :80 named web
       - --entrypoints.web-secured.address=:443 # <== Defining an entrypoint for https on port :443 named web-secured
@@ -71,7 +73,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock # <== Volume for docker admin
       - ./dynamic.yaml:/dynamic.yaml # <== Volume for dynamic conf file, **ref: line 27
     networks:
-      - web # <== Placing traefik on the network named web, to access containers on this network
+      - main # <== Placing traefik on the network named main, to access containers on this network
     labels:
     #### Labels define the behavior and rules of the traefik proxy for this container ####
       - "traefik.enable=true" # <== Enable traefik on itself to view dashboard and assign subdomain to view it
@@ -79,5 +81,5 @@ services:
       - "traefik.http.routers.api.service=api@internal" # <== Enabling the api to be a service to access
 
 networks:
-  web:
+  main:
     external: true
