@@ -129,8 +129,8 @@ USE_TZ = True
 
 
 MEDIA_URL = '/' #  add not prefix in the url of the media file (django)
-MEDIA_BASE_PATH = 'media/' #  save all the media file in the a media folder in the root project (custom)
-MEDIAFILES_LOCATION = '' #  do not use any deefault location (django-storage)
+MEDIA_BASE_PATH = 'media/' #  save all the media file in the media folder in the root project (custom)
+MEDIAFILES_LOCATION = '' #  do not use any default location (django-storage)
 
 STATIC_URL = '/static/' #  (django)
 STATICFILES_DIRS = [BASE_DIR / "static",] #  (django)
