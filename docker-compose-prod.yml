@@ -21,7 +21,7 @@ services:
     networks:
       - main
   traefik:
-    image: traefik:v2.1
+    image: traefik
     restart: always
     container_name: traefik
     ports:
@@ -31,27 +31,26 @@ services:
     ## command:
     #### These are the CLI commands that will configure Traefik and tell it how to work! ####
       ## API Settings - https://docs.traefik.io/operations/api/, endpoints - https://docs.traefik.io/operations/api/#endpoints ##
-      ### - --api.insecure=true # <== Enabling insecure api, NOT RECOMMENDED FOR PRODUCTION
-      ### - --api.dashboard=true # <== Enabling the dashboard to view services, middlewares, routers, etc...
-      ### - --api.debug=true # <== Enabling additional endpoints for debugging and profiling
+      - --api.insecure=true # <== Enabling insecure api, NOT RECOMMENDED FOR PRODUCTION
+      - --api.dashboard=true # <== Enabling the dashboard to view services, middlewares, routers, etc...
+      - --api.debug=true # <== Enabling additional endpoints for debugging and profiling
       ## Log Settings (options: ERROR, DEBUG, PANIC, FATAL, WARN, INFO) - https://docs.traefik.io/observability/logs/ ##
-      ### - --log.level=DEBUG # <== Setting the level of the logs from traefik
+      - --log.level=DEBUG # <== Setting the level of the logs from traefik
       ## Provider Settings - https://docs.traefik.io/providers/docker/#provider-configuration ##
-      ### - --providers.docker=true # <== Enabling docker as the provider for traefik
-      ### - --providers.docker.exposedbydefault=false # <== Don't expose every container to traefik, only expose enabled ones
-      ### - --providers.file.filename=/dynamic.yaml # <== Referring to a dynamic configuration file
-      ### - --providers.docker.network=main # <== Operate on the docker network named web
+      - --providers.docker=true # <== Enabling docker as the provider for traefik
+      - --providers.docker.exposedbydefault=false # <== Don't expose every container to traefik, only expose enabled ones
+      - --providers.file.filename=/dynamic.yaml # <== Referring to a dynamic configuration file
+      - --providers.docker.network=main # <== Operate on the docker network named web
       ## Entrypoints Settings - https://docs.traefik.io/routing/entrypoints/#configuration ##
-      ### - --entrypoints.web.address=:80 # <== Defining an entrypoint for port :80 named web
-      ### - --entrypoints.web-secured.address=:443 # <== Defining an entrypoint for https on port :443 named web-secured
+      - --entrypoints.web.address=:80 # <== Defining an entrypoint for port :80 named web
+      - --entrypoints.web-secured.address=:443 # <== Defining an entrypoint for https on port :443 named web-secured
       ## Certificate Settings (Let's Encrypt) -  https://docs.traefik.io/https/acme/#configuration-examples ##
-      ### - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true # <== Enable TLS-ALPN-01 to generate and renew ACME certs
-      ### - --certificatesresolvers.mytlschallenge.acme.email=mopitz199@gmail.com # <== Setting email for certs
-      ### - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json # <== Defining acme file to store cert information
+      - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true # <== Enable TLS-ALPN-01 to generate and renew ACME certs
+      - --certificatesresolvers.mytlschallenge.acme.email=mopitz199@gmail.com # <== Setting email for certs
+      - --certificatesresolvers.mytlschallenge.acme.storage=/acme.json # <== Defining acme file to store cert information
     volumes:
       - ./acme.json:/acme.json # <== Volume for certs (TLS)
       - /var/run/docker.sock:/var/run/docker.sock # <== Volume for docker admin
-      - ./traefik.yaml:/traefik.yaml # <== Volume for dynamic conf file, **ref: line 27
       - ./dynamic.yaml:/dynamic.yaml # <== Volume for dynamic conf file, **ref: line 27
     networks:
       - main # <== Placing traefik on the network named main, to access containers on this network
@@ -74,15 +73,15 @@ services:
       - traefik
     networks:
       - main
-    ### labels:
+    labels:
       #### Labels define the behavior and rules of the traefik proxy for this container ####
-      ### - "traefik.enable=true" # <== Enable traefik to proxy this container
-      ### - "traefik.http.routers.nginx-web.rule=Host(`tranquileinjohnwayne.work`)" # <== Your Domain Name goes here for the http rule
-      ### - "traefik.http.routers.nginx-web.entrypoints=web" # <== Defining the entrypoint for http, **ref: line 30
-      ### - "traefik.http.routers.nginx-web.middlewares=redirect@file" # <== This is a middleware to redirect to https
-      ### - "traefik.http.routers.nginx-secured.rule=Host(`tranquileinjohnwayne.work`)" # <== Your Domain Name for the https rule 
-      ### - "traefik.http.routers.nginx-secured.entrypoints=web-secured" # <== Defining entrypoint for https, **ref: line 31
-      ### - "traefik.http.routers.nginx-secured.tls.certresolver=mytlschallenge" # <== Defining certsresolvers for https
+      - "traefik.enable=true" # <== Enable traefik to proxy this container
+      - "traefik.http.routers.nginx-web.rule=Host(`tranquileinjohnwayne.work`)" # <== Your Domain Name goes here for the http rule
+      - "traefik.http.routers.nginx-web.entrypoints=web" # <== Defining the entrypoint for http, **ref: line 30
+      - "traefik.http.routers.nginx-web.middlewares=redirect@file" # <== This is a middleware to redirect to https
+      - "traefik.http.routers.nginx-secured.rule=Host(`tranquileinjohnwayne.work`)" # <== Your Domain Name for the https rule 
+      - "traefik.http.routers.nginx-secured.entrypoints=web-secured" # <== Defining entrypoint for https, **ref: line 31
+      - "traefik.http.routers.nginx-secured.tls.certresolver=mytlschallenge" # <== Defining certsresolvers for https
 
 
 networks:
