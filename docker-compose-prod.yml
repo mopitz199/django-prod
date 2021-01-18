@@ -74,7 +74,7 @@ services:
       - traefik
     networks:
       - main
-    labels:
+    ### labels:
       #### Labels define the behavior and rules of the traefik proxy for this container ####
       ### - "traefik.enable=true" # <== Enable traefik to proxy this container
       ### - "traefik.http.routers.nginx-web.rule=Host(`tranquileinjohnwayne.work`)" # <== Your Domain Name goes here for the http rule
