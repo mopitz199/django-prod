@@ -71,8 +71,8 @@ services:
     volumes:
       - ./letsencrypt:/letsencrypt # <== Volume for certs (TLS)
       - /var/run/docker.sock:/var/run/docker.sock # <== Volume for docker admin
-      - ./dynamic.yaml:/dynamic.yaml # <== Volume for dynamic conf file, **ref: line 27
       - ./traefik.yaml:/traefik.yaml # <== Volume for dynamic conf file, **ref: line 27
+      - ./dynamic.yaml:/dynamic.yaml # <== Volume for dynamic conf file, **ref: line 27
     networks:
       - main # <== Placing traefik on the network named main, to access containers on this network
     labels:

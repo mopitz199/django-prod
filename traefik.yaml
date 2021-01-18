@@ -27,13 +27,7 @@ entryPoints:
 certificatesResolvers:
   mytlschallenge:
     acme:
-      tlsChallenge: true
+      httpChallenge:
+        entryPoint: "web"
       email: "mopitz199@gmail.com"
       storage: "/letsencrypt/acme.json"
-
-  
-http:
-  middlewares:
-    redirect:
-      redirectScheme:
-        scheme: https
