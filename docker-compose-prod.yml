@@ -41,7 +41,7 @@ services:
       - "traefik.http.routers.nginx-secured.entrypoints=web-secured" # <== Defining entrypoint for https, **ref: line 31
       - "traefik.http.routers.nginx-secured.tls.certresolver=mytlschallenge" # <== Defining certsresolvers for https
   traefik:
-    image: traefik:v2.0
+    image: traefik
     restart: always
     container_name: traefik
     ports:
