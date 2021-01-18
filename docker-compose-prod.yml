@@ -59,7 +59,7 @@ services:
       ## Provider Settings - https://docs.traefik.io/providers/docker/#provider-configuration ##
       - --providers.docker=true # <== Enabling docker as the provider for traefik
       - --providers.docker.exposedbydefault=false # <== Don't expose every container to traefik, only expose enabled ones
-      - --providers.file.filename=/dynamic.yaml # <== Referring to a dynamic configuration file
+      ## - --providers.file.filename=/dynamic.yaml # <== Referring to a dynamic configuration file
       - --providers.docker.network=main # <== Operate on the docker network named web
       ## Entrypoints Settings - https://docs.traefik.io/routing/entrypoints/#configuration ##
       - --entrypoints.web.address=:80 # <== Defining an entrypoint for port :80 named web
@@ -71,7 +71,7 @@ services:
     volumes:
       - ./letsencrypt:/letsencrypt # <== Volume for certs (TLS)
       - /var/run/docker.sock:/var/run/docker.sock # <== Volume for docker admin
-      - ./dynamic.yaml:/dynamic.yaml # <== Volume for dynamic conf file, **ref: line 27
+      - ./traefik.yaml:/traefik.yaml # <== Volume for dynamic conf file, **ref: line 27
     networks:
       - main # <== Placing traefik on the network named main, to access containers on this network
     labels:
