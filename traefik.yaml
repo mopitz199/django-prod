@@ -1,0 +1,31 @@
+providers:
+  docker:
+    exposedByDefault: true
+    network: main
+  file:
+    filename: "/dynamic.yaml"
+
+
+api:
+  insecure: true
+  dashboard: true
+  debug: true
+
+
+log:
+  level: DEBUG
+
+
+entryPoints:
+  web:
+    address: ":80"
+  web-secured:
+    address: ":433"
+
+
+certificatesResolvers:
+  mytlschallenge:
+    acme:
+      tlschallenge: true
+      email: "mopitz199@gmail.com"
+      storage: "/letsencrypt/acme.json"
