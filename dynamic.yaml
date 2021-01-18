@@ -1,23 +1,5 @@
 ## Setting up the middleware for redirect to https ##
 http:
-  routers:
-    nginx-web:
-      service: nginx-web-service
-      rule: "Host(`tranquileinjohnwayne.work`)"
-      entryPoints:
-        - "web"
-    nginx-secured:
-      service: "nginx-web-service"
-      rule: "Host(`tranquileinjohnwayne.work`)"
-      entryPoints:
-        - "web-secured"
-        tls:
-          certResolver: "mytlschallenge"
-  services:
-    nginx-web-service:
-      loadBalancer:
-        servers:
-          - url: "http://172.22.0.4:5005"
   middlewares:
     redirect:
       redirectScheme:
