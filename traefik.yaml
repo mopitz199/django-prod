@@ -10,8 +10,9 @@ log:
 
 providers:
   docker:
-    exposedByDefault: true
+    endpoint: "unix:///var/run/docker.sock"
     network: main
+    exposedByDefault: true
   file:
     filename: "/dynamic.yaml"
 
