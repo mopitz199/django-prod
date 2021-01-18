@@ -49,7 +49,6 @@ services:
       ### - --certificatesresolvers.mytlschallenge.acme.email=mopitz199@gmail.com # <== Setting email for certs
       ### - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json # <== Defining acme file to store cert information
     volumes:
-      - ./letsencrypt:/letsencrypt # <== Volume for certs (TLS)
       - ./acme.json:/acme.json # <== Volume for certs (TLS)
       - /var/run/docker.sock:/var/run/docker.sock # <== Volume for docker admin
       - ./traefik.yaml:/traefik.yaml # <== Volume for dynamic conf file, **ref: line 27
