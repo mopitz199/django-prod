@@ -47,9 +47,9 @@ services:
       ## Certificate Settings (Let's Encrypt) -  https://docs.traefik.io/https/acme/#configuration-examples ##
       - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true # <== Enable TLS-ALPN-01 to generate and renew ACME certs
       - --certificatesresolvers.mytlschallenge.acme.email=mopitz199@gmail.com # <== Setting email for certs
-      - --certificatesresolvers.mytlschallenge.acme.storage=/acme.json # <== Defining acme file to store cert information
+      - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json # <== Defining acme file to store cert information
     volumes:
-      - ./acme.json:/acme.json # <== Volume for certs (TLS)
+      - ./letsencrypt:/letsencrypt # <== Volume for certs (TLS)
       - /var/run/docker.sock:/var/run/docker.sock # <== Volume for docker admin
       - ./dynamic.yaml:/dynamic.yaml # <== Volume for dynamic conf file, **ref: line 27
     networks:
@@ -70,7 +70,6 @@ services:
       - .:/code
     depends_on:
       - db
-      - traefik
     networks:
       - main
     labels:
