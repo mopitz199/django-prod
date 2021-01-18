@@ -50,6 +50,7 @@ services:
       ### - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json # <== Defining acme file to store cert information
     volumes:
       - ./letsencrypt:/letsencrypt # <== Volume for certs (TLS)
+      - ./acme.json:/acme.json # <== Volume for certs (TLS)
       - /var/run/docker.sock:/var/run/docker.sock # <== Volume for docker admin
       - ./traefik.yaml:/traefik.yaml # <== Volume for dynamic conf file, **ref: line 27
       - ./dynamic.yaml:/dynamic.yaml # <== Volume for dynamic conf file, **ref: line 27

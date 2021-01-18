@@ -28,6 +28,6 @@ certificatesResolvers:
   mytlschallenge:
     acme:
       httpChallenge:
-        entryPoint: "web"
-      email: "mopitz199@gmail.com"
-      storage: "/letsencrypt/acme.json"
+        entryPoint: web
+      email: mopitz199@gmail.com
+      storage: /acme.json
