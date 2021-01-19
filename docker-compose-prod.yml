@@ -6,20 +6,6 @@ volumes:
 
 
 services:
-  db:
-    build:
-      dockerfile: docker/postgres/Dockerfile
-      context: .
-    environment:
-      POSTGRES_DB: "${DATABASE_HOST}"
-      POSTGRES_USER: "${DATABASE_USER}"
-      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - 5435:5432
-    networks:
-      - main
   traefik:
     image: traefik
     restart: always
@@ -39,7 +25,7 @@ services:
       ## Provider Settings - https://docs.traefik.io/providers/docker/#provider-configuration ##
       - --providers.docker=true # <== Enabling docker as the provider for traefik
       - --providers.docker.exposedbydefault=false # <== Don't expose every container to traefik, only expose enabled ones
-      - --providers.file.filename=/dynamic.yaml # <== Referring to a dynamic configuration file
+      - --providers.file.filename=/traefik/dynamic.yaml # <== Referring to a dynamic configuration file
       - --providers.docker.network=main # <== Operate on the docker network named web
       ## Entrypoints Settings - https://docs.traefik.io/routing/entrypoints/#configuration ##
       - --entrypoints.web.address=:80 # <== Defining an entrypoint for port :80 named web
@@ -51,7 +37,7 @@ services:
     volumes:
       - ./letsencrypt:/letsencrypt # <== Volume for certs (TLS)
       - /var/run/docker.sock:/var/run/docker.sock # <== Volume for docker admin
-      - ./dynamic.yaml:/dynamic.yaml # <== Volume for dynamic conf file, **ref: line 27
+      - ./traefik:/traefik # <== Volume for dynamic conf file, **ref: line 27
     networks:
       - main # <== Placing traefik on the network named main, to access containers on this network
     labels:
@@ -59,6 +45,20 @@ services:
       - "traefik.enable=true" # <== Enable traefik on itself to view dashboard and assign subdomain to view it
       - "traefik.http.routers.api.rule=Host(`dashboard.laconga.work`)" # <== Setting the domain for the dashboard
       - "traefik.http.routers.api.service=api@internal" # <== Enabling the api to be a service to access
+  db:
+    build:
+      dockerfile: docker/postgres/Dockerfile
+      context: .
+    environment:
+      POSTGRES_DB: "${DATABASE_HOST}"
+      POSTGRES_USER: "${DATABASE_USER}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5435:5432
+    networks:
+      - main
   api:
     build:
       dockerfile: docker/api/Dockerfile
