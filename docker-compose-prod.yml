@@ -69,7 +69,7 @@ services:
     volumes:
       - .:/code
     environment:
-      - DEPLOYMENT_COLOR: "${IDLE_COLOR}"
+      DEPLOYMENT_COLOR: "${IDLE_COLOR}"
     depends_on:
       - db
     networks:

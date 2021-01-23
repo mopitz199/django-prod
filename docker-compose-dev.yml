@@ -21,7 +21,7 @@ services:
       dockerfile: docker/api/Dockerfile
       context: .
     environment:
-      - DEPLOYMENT_COLOR: "${IDLE_COLOR}"
+      DEPLOYMENT_COLOR: "${IDLE_COLOR}"
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:${PORT} --settings=djangoprod.settings"
     ports:
       - "${PORT}:${PORT}"
