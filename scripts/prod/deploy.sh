@@ -12,8 +12,8 @@ fi
 source ./.colors
 
 # Build and bring up new containers
-git pull
-docker-compose build --pull api
+# git pull
+# docker-compose build --pull api
 docker-compose -f docker-compose-prod.yml -p $IDLE_COLOR up -d --scale api=1 --force-recreate api
 
 # Bring down old containers once new ones are working
