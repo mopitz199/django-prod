@@ -68,6 +68,8 @@ services:
       - "${PORT}:${PORT}"
     volumes:
       - .:/code
+    environment:
+      - DEPLOYMENT_COLOR=${IDLE_COLOR}
     depends_on:
       - db
     networks:
@@ -81,7 +83,12 @@ services:
       - "traefik.http.routers.nginx-secured.rule=Host(`laconga.work`)" # <== Your Domain Name for the https rule 
       - "traefik.http.routers.nginx-secured.entrypoints=web-secured" # <== Defining entrypoint for https, **ref: line 31
       - "traefik.http.routers.nginx-secured.tls.certresolver=mytlschallenge" # <== Defining certsresolvers for https
-
+      - traefik.http.services.myservice.loadbalancer.responseforwarding.flushinterval=-1
+      - traefik.http.services.myservice.loadbalancer.server.port=${PORT}
+      - traefik.http.services.myservice.loadbalancer.healthcheck.path=/health
+      - traefik.http.services.myservice.loadbalancer.healthcheck.port=${PORT}
+      - traefik.http.services.myservice.loadbalancer.healthcheck.timeout=2s
+      - traefik.http.services.myservice.loadbalancer.healthcheck.interval=60s
 
 networks:
   main:

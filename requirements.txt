@@ -8,3 +8,4 @@ django-storages==1.10.1 # for s3 static and media files
 python-dotenv==0.15.0 # for env in .env file
 gunicorn==20.0.4 # for serving the django app in prod
 psycopg2==2.8.4 # for postgres
+djangorestframework==3.12.2 # for api's

@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'storages', # To handle files with S3
     'file_app',
-    'website',
 ]
 
 MIDDLEWARE = [
