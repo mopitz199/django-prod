@@ -64,8 +64,6 @@ services:
       dockerfile: docker/api/Dockerfile
       context: .
     command: sh -c "python manage.py migrate && gunicorn --env DJANGO_SETTINGS_MODULE=djangoprod.settings-prod djangoprod.wsgi -b 0.0.0.0:${PORT}"
-    ports:
-      - "${PORT}:${PORT}"
     volumes:
       - .:/code
     environment:
