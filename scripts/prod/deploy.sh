@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Check if docker network is present (if not, this deployment is being done the first time)
 DOCKER_NETWORK_ID=$(docker network inspect main -f '{{ .Id }}')
 if [[ "${DOCKER_NETWORK_ID}" == "" ]]; then 
