@@ -68,8 +68,6 @@ services:
       - .:/code
     environment:
       DEPLOYMENT_COLOR: "${IDLE_COLOR}"
-    depends_on:
-      - db
     networks:
       - main
     labels:
