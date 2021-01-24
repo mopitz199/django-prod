@@ -4,7 +4,7 @@
 DOCKER_NETWORK_ID=$(docker network inspect main -f '{{ .Id }}')
 if [[ "${DOCKER_NETWORK_ID}" == "" ]]; then 
     docker network create main;
-    docker-compose -f docker-compose-prod.yml up -d traefik;
+    docker-compose -f docker-compose-prod.yml up --force-recreate -d traefik;
     touch ./.colors;
     echo -e "export DEPLOYED_COLOR=blue" > .colors;
     echo -e "export IDLE_COLOR=green\n" >> .colors;
