@@ -15,7 +15,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - 5435:5432
+      - "${DATABASE_PORT}":"${DATABASE_PORT}"
   api:
     build:
       dockerfile: docker/api/Dockerfile
