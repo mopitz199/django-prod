@@ -1,7 +1,7 @@
 # Check if docker network is present (if not, this deployment is being done the first time)
-docker network create main;
 DOCKER_NETWORK_ID=$(docker network inspect main -f '{{ .Id }}')
 if [[ "${DOCKER_NETWORK_ID}" == "" ]]; then 
+    docker network create main;
     docker-compose -f docker-compose-prod.yml up -d traefik;
     touch ./.colors;
     echo -e "export DEPLOYED_COLOR=blue" > .colors;
