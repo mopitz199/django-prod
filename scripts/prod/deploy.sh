@@ -16,7 +16,7 @@ source ./.colors
 # Build and bring up new containers
 # git pull
 # docker-compose build --pull api
-docker-compose -f docker-compose-prod.yml up --force-recreate -d db
+# docker-compose -f docker-compose-prod.yml up --force-recreate -d db
 DEPLOYED_COLOR=$IDLE_COLOR docker-compose -f docker-compose-prod.yml -p $IDLE_COLOR up --scale api=1 --force-recreate -d api
 
 # Bring down old containers once new ones are working
