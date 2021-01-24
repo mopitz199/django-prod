@@ -12,6 +12,7 @@ fi
 
 # Get the latest colors config
 source ./.colors
+source ./.env
 
 # Build and bring up new containers
 # git pull
@@ -20,7 +21,7 @@ source ./.colors
 DEPLOYED_COLOR=$IDLE_COLOR docker-compose -f docker-compose-prod.yml -p $IDLE_COLOR up --scale api=1 --force-recreate -d api
 
 # Bring down old containers once new ones are working
-while [[ $(curl -s --location --request GET 'http://laconga.work/deployment_color' | tr -d \") != $IDLE_COLOR ]]; do :; done
+while [[ $(curl -s --location --request GET ''$COLOR_URL'' | tr -d \") != $IDLE_COLOR ]]; do :; done
 docker-compose -p $DEPLOYED_COLOR -f docker-compose-prod.yml down
 
 # Update the .colors config
