@@ -9,7 +9,7 @@ if [[ "${DOCKER_NETWORK_ID}" != "" ]]; then
 fi
 
 # Get the latest colors config
-source ./.colors
+source ./.env
 
 # Build and bring up new containers
 # git pull
@@ -21,8 +21,8 @@ while [[ $(curl -s --location --request GET 'http://localhost/deployment_color' 
 docker-compose -f docker-compose-prod.yml -p $DEPLOYED_COLOR down
 
 # Update the .colors config
-echo -e "export DEPLOYED_COLOR="${IDLE_COLOR} > .colors
-echo -e "export IDLE_COLOR="${DEPLOYED_COLOR} >> .colors
+echo -e "export DEPLOYED_COLOR="${IDLE_COLOR} > .env
+echo -e "export IDLE_COLOR="${DEPLOYED_COLOR} >> .env
 
 # Prune unused images/layers (from old deployment)
 docker image prune -f
