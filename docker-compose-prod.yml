@@ -28,12 +28,12 @@ services:
       - --providers.file.filename=/traefik/dynamic.yaml # <== Referring to a dynamic configuration file
       - --providers.docker.network=main # <== Operate on the docker network named web
       ## Entrypoints Settings - https://docs.traefik.io/routing/entrypoints/#configuration ##
-      - --entrypoints.web.address=:80 # <== Defining an entrypoint for port :80 named web
-      - --entrypoints.web-secured.address=:443 # <== Defining an entrypoint for https on port :443 named web-secured
+      - --entrypoints.server-entrypoint.address=:80 # <== Defining an entrypoint for port :80 named web
+      - --entrypoints.server-secured-entrypoint.address=:443 # <== Defining an entrypoint for https on port :443 named web-secured
       ## Certificate Settings (Let's Encrypt) -  https://docs.traefik.io/https/acme/#configuration-examples ##
-      - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true # <== Enable TLS-ALPN-01 to generate and renew ACME certs
-      - --certificatesresolvers.mytlschallenge.acme.email=mopitz199@gmail.com # <== Setting email for certs
-      - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json # <== Defining acme file to store cert information
+      - --certificatesresolvers.tls-certificate-resolver.acme.tlschallenge=true # <== Enable TLS-ALPN-01 to generate and renew ACME certs
+      - --certificatesresolvers.tls-certificate-resolver.acme.email=mopitz199@gmail.com # <== Setting email for certs
+      - --certificatesresolvers.tls-certificate-resolver.acme.storage=/letsencrypt/acme.json # <== Defining acme file to store cert information
     volumes:
       - ./letsencrypt:/letsencrypt # <== Volume for certs (TLS)
       - /var/run/docker.sock:/var/run/docker.sock # <== Volume for docker admin
@@ -73,18 +73,18 @@ services:
     labels:
       #### Labels define the behavior and rules of the traefik proxy for this container ####
       - "traefik.enable=true" # <== Enable traefik to proxy this container
-      - "traefik.http.routers.nginx-web.rule=Host(`${DOMAIN}`)" # <== Your Domain Name goes here for the http rule
-      - "traefik.http.routers.nginx-web.entrypoints=web" # <== Defining the entrypoint for http, **ref: line 30
-      - "traefik.http.routers.nginx-web.middlewares=redirect@file" # <== This is a middleware to redirect to https
-      - "traefik.http.routers.nginx-secured.rule=Host(`${DOMAIN}`)" # <== Your Domain Name for the https rule 
-      - "traefik.http.routers.nginx-secured.entrypoints=web-secured" # <== Defining entrypoint for https, **ref: line 31
-      - "traefik.http.routers.nginx-secured.tls.certresolver=mytlschallenge" # <== Defining certsresolvers for https
-      - "traefik.http.services.myservice.loadbalancer.responseforwarding.flushinterval=-1"
-      - "traefik.http.services.myservice.loadbalancer.server.port=${PORT}"
-      - "traefik.http.services.myservice.loadbalancer.healthcheck.path=/health"
-      - "traefik.http.services.myservice.loadbalancer.healthcheck.port=${PORT}"
-      - "traefik.http.services.myservice.loadbalancer.healthcheck.timeout=2s"
-      - "traefik.http.services.myservice.loadbalancer.healthcheck.interval=60s"
+      - "traefik.http.routers.server-router.rule=Host(`${DOMAIN}`)" # <== Your Domain Name goes here for the http rule
+      - "traefik.http.routers.server-router.entrypoints=server-entrypoint" # <== Defining the entrypoint for http, **ref: line 30
+      - "traefik.http.routers.server-router.middlewares=redirect@file" # <== This is a middleware to redirect to https
+      - "traefik.http.routers.server-secured-router.rule=Host(`${DOMAIN}`)" # <== Your Domain Name for the https rule 
+      - "traefik.http.routers.server-secured-router.entrypoints=server-secured-entrypoint" # <== Defining entrypoint for https, **ref: line 31
+      - "traefik.http.routers.server-secured-router.tls.certresolver=tls-certificate-resolver" # <== Defining certsresolvers for https
+      - "traefik.http.services.load-balancer-service.loadbalancer.responseforwarding.flushinterval=-1"
+      - "traefik.http.services.load-balancer-service.loadbalancer.server.port=${PORT}"
+      - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.path=/health"
+      - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.port=${PORT}"
+      - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.timeout=2s"
+      - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.interval=60s"
 
 networks:
   main:
