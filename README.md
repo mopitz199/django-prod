@@ -1,3 +1,4 @@
+
 ## Environment variables
 
 All the environment variables will be hosted in just one place. To do so, some changes were nedded in order to detect the environments in all the places(docker-compose, docker, code).
