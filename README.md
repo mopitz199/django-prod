@@ -1,4 +1,3 @@
-
 ## Environment variables
 
 All the environment variables will be hosted in just one place. To do so, some changes were nedded in order to detect the environments in all the places(docker-compose, docker, code).
@@ -18,5 +17,7 @@ Where basically we created two **entrypoints** that are listening in the port 80
 <br>
 
 ## Zero Downtime
+
+To keep the server up and running. We used the color(green/blue) system. Were basicaly we run a new server with the new code(blue), then we start routing the requests to that server, and finally, we turn of the old server that was running(green)
 
 To do :)
