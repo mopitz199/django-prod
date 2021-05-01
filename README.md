@@ -6,6 +6,12 @@ All the environment variables will be hosted in just one place. To do so, some c
 
 <br>
 
+## Media files
+
+We use the storages package to handle the media files
+
+![alt text](readme_static/media_files.png)
+
 ## HTTPS
 
 This implementation support HTTPS by Traefik. The following diagram explain how this work.
