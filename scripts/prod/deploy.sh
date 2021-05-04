@@ -5,6 +5,7 @@ DOCKER_NETWORK_ID=$(docker network inspect main -f '{{ .Id }}')
 if [[ "${DOCKER_NETWORK_ID}" == "" ]]; then 
     docker network create main;
     docker-compose -f docker-compose-prod.yml up --force-recreate -d traefik;
+    docker-compose -f docker-compose-prod.yml up -d db
     touch ./.colors;
     echo -e "export DEPLOYED_COLOR=blue" > .colors;
     echo -e "export IDLE_COLOR=green\n" >> .colors;
@@ -15,9 +16,9 @@ source ./.colors
 source ./.env
 
 # Build and bring up new containers
-# git pull
-# docker-compose build --pull api
-# docker-compose -f docker-compose-prod.yml up --force-recreate -d db
+# git pull origin main
+# docker-compose -f docker-compose-prod.yml build --pull api
+# docker-compose -f docker-compose-prod.yml up -d db
 DEPLOYED_COLOR=$IDLE_COLOR docker-compose -f docker-compose-prod.yml -p $IDLE_COLOR up --scale api=1 --force-recreate -d api
 
 # Bring down old containers once new ones are working
