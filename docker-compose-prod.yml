@@ -92,6 +92,8 @@ services:
       - ./prometheus/:/etc/prometheus
     ports:
       - "${PROMETHEUS_PORT}:${PROMETHEUS_PORT}"
+    networks:
+      - main # <== Placing traefik on the network named main, to access containers on this network
   grafana:
     image: grafana/grafana:latest
     container_name: monitoring_grafana
@@ -112,6 +114,8 @@ services:
       - "GF_SMTP_USER=${GF_SMTP_USER}"
       - "GF_SMTP_PASSWORD=${GF_SMTP_PASSWORD}"
       - "GF_SMTP_FROM_ADDRESS=${GF_SMTP_FROM_ADDRESS}"
+    networks:
+      - main # <== Placing traefik on the network named main, to access containers on this network
 
 networks:
   main:
