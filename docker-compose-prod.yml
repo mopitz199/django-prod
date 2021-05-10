@@ -3,6 +3,7 @@ version: "3.8"
 
 volumes:
   pgdata:
+  grafana-storage:
 
 
 services:
@@ -85,6 +86,32 @@ services:
       - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.port=${PORT}"
       - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.timeout=2s"
       - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.interval=60s"
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus
+    ports:
+      - "${PROMETHEUS_PORT}:${PROMETHEUS_PORT}"
+  grafana:
+    image: grafana/grafana:latest
+    container_name: monitoring_grafana
+    restart: unless-stopped
+    ports:
+      - "${GRAFANA_PORT}:${GRAFANA_PORT}" # host.docker.internal
+    links:
+      - prometheus:prometheus
+    volumes:
+      - ./grafana/config/grafana.ini:/etc/grafana/grafana.ini
+      - grafana-storage:/var/lib/grafana grafana/grafana
+    environment:
+      - "GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}"
+      - "GF_USERS_ALLOW_SIGN_UP=${GF_USERS_ALLOW_SIGN_UP}"
+      - "GF_SERVER_DOMAIN=${GF_SERVER_DOMAIN}"
+      - "GF_SMTP_ENABLED=${GF_SMTP_ENABLED}"
+      - "GF_SMTP_HOST=${GF_SMTP_HOST}"
+      - "GF_SMTP_USER=${GF_SMTP_USER}"
+      - "GF_SMTP_PASSWORD=${GF_SMTP_PASSWORD}"
+      - "GF_SMTP_FROM_ADDRESS=${GF_SMTP_FROM_ADDRESS}"
 
 networks:
   main:
