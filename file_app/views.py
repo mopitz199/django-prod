@@ -1,9 +1,13 @@
+from prometheus_client import Counter
+
 from django.shortcuts import render
 from django.http import HttpResponse
 
+c = Counter('health', 'The number of time where health endpint is called')
 
 def health(request):
-    html = "<html><body>Healthy</body></html>"
+    html = "<html><body>Healthy</body></html>"    
+    c.inc()
     return HttpResponse(html)
 
 def deployment_color(request):
