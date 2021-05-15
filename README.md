@@ -1,3 +1,9 @@
+## Infrastructure
+
+Here we will show a brief structure of how the infrastructure is created in this project
+
+![alt text](readme_static/infrastructure.png)
+
 ## Environment variables
 
 All the environment variables will be hosted in just one place. To do so, some changes were nedded in order to detect the environments in all the places(docker-compose, docker, code).
