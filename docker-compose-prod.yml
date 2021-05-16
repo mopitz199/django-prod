@@ -75,19 +75,18 @@ services:
       #### Labels define the behavior and rules of the traefik proxy for this container ####
       - "traefik.enable=true" # <== Enable traefik to proxy this container
 
-      - "traefik.http.routers.server-metrics-router.rule=Host(`${DOMAIN}`) && PathPrefix(`/metrics`)" # <== Your Domain Name goes here for the http rule
-      - "traefik.http.routers.server-metrics-router.middlewares=server-metrics-middleware"
-      - "traefik.http.middlewares.server-metrics-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
+      - "traefik.http.routers.server-secured-metrics-router.entrypoints=server-secured-entrypoint" # <== Defining entrypoint for https
+      - "traefik.http.routers.server-secured-metrics-router.rule=Host(`${DOMAIN}`) && PathPrefix(`/metrics`)" # <== Your Domain Name goes here for the http rule
+      - "traefik.http.routers.server-secured-metrics-router.middlewares=server-metrics-middleware"
+      - "traefik.http.middlewares.server-secured-metrics-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
 
       - "traefik.http.routers.server-router.rule=Host(`${DOMAIN}`)" # <== Your Domain Name goes here for the http rule
       - "traefik.http.routers.server-router.entrypoints=server-entrypoint" # <== Defining the entrypoint for http, **ref: line 30
       - "traefik.http.routers.server-router.middlewares=redirect@file" # <== This is a middleware to redirect to https
 
       - "traefik.http.routers.server-secured-router.rule=Host(`${DOMAIN}`)" # <== Your Domain Name for the https rule 
-      - "traefik.http.routers.server-secured-router.entrypoints=server-secured-entrypoint" # <== Defining entrypoint for https, **ref: line 31
+      - "traefik.http.routers.server-secured-router.entrypoints=server-secured-entrypoint" # <== Defining entrypoint for https
       - "traefik.http.routers.server-secured-router.tls.certresolver=tls-certificate-resolver" # <== Defining certsresolvers for https
-
-      
 
       - "traefik.http.services.load-balancer-service.loadbalancer.responseforwarding.flushinterval=-1"
       - "traefik.http.services.load-balancer-service.loadbalancer.server.port=${PORT}"
