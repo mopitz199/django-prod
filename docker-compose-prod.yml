@@ -77,7 +77,7 @@ services:
 
       - "traefik.http.routers.server-metrics-router.rule=Host(`${DOMAIN}/metrics`)" # <== Your Domain Name goes here for the http rule
       - "traefik.http.routers.server-metrics-router.middlewares=server-metrics-middleware"
-      - "traefik.http.middlewares.server-metrics-middleware.basicauth.users=max:$$apr1$n7ep9klb$aEM7SYUnMbIpGSt914JaF/"
+      - "traefik.http.middlewares.server-metrics-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
 
       - "traefik.http.routers.server-router.rule=Host(`${DOMAIN}`)" # <== Your Domain Name goes here for the http rule
       - "traefik.http.routers.server-router.entrypoints=server-entrypoint" # <== Defining the entrypoint for http, **ref: line 30
