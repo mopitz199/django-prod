@@ -75,7 +75,7 @@ services:
       #### Labels define the behavior and rules of the traefik proxy for this container ####
       - "traefik.enable=true" # <== Enable traefik to proxy this container
 
-      - "traefik.http.routers.server-metrics-router.rule=Path(`/metrics`)" # <== Your Domain Name goes here for the http rule
+      - "traefik.http.routers.server-metrics-router.rule=Host(`${DOMAIN}`) && PathPrefix(`/metrics`)" # <== Your Domain Name goes here for the http rule
       - "traefik.http.routers.server-metrics-router.middlewares=server-metrics-middleware"
       - "traefik.http.middlewares.server-metrics-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
 
