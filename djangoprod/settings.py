@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'storages', # To handle files with S3
     'django_prometheus', # To monitoring the django behavior
+    'corsheaders', # handle cors
     'file_app',
 ]
 
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django_prometheus.middleware.PrometheusBeforeMiddleware', # Middleware for prometheus
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -145,3 +147,6 @@ AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 AWS_DEFAULT_ACL = None
 AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
+
+
+CORS_ALLOW_ALL_ORIGINS = True

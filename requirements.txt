@@ -10,3 +10,4 @@ gunicorn==20.0.4 # for serving the django app in prod
 psycopg2==2.8.4 # for postgres
 djangorestframework==3.12.2 # for api's
 django-prometheus==2.1.0 # prometheus to monitoring django behavior
+django-cors-headers==3.7.0 # handle cors
