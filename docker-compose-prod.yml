@@ -112,7 +112,7 @@ services:
       - "traefik.http.middlewares.prometheus-middleware.chain.middlewares=prometheus-cors-middleware,prometheus-basi-auth-middleware"
 
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST"
-      - "traefik.http.middlewares.prometheus-cors-middleware.headers.allowedhosts=http://laconga.work:9090"
+      - "traefik.http.middlewares.prometheus-cors-middleware.headers.allowedhosts=http://grafana.laconga.work:9090"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolalloworigin=origin-list-or-null"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolmaxage=100"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolallowcredentials=true"
