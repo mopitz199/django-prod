@@ -116,6 +116,7 @@ services:
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolalloworigin=*"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolallowheaders=*"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolallowcredentials=true"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.addvaryheader=true"
       - "traefik.http.middlewares.prometheus-basi-auth-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
   grafana:
