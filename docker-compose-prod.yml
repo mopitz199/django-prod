@@ -114,7 +114,6 @@ services:
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolalloworiginlist=http://laconga.work:9090"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolalloworigin=http://laconga.work:9090"
-      - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolallowheaders=*"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolmaxage=100"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolallowcredentials=true"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.addvaryheader=true"
