@@ -95,11 +95,6 @@ services:
       - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.port=${PORT}"
       - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.timeout=2s"
       - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.interval=60s"
-
-      - "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
-      - "traefik.http.middlewares.testheader.headers.accesscontrolalloworiginlist=http://grafana.laconga.work"
-      - "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100"
-      - "traefik.http.middlewares.testheader.headers.addvaryheader=true"
   prometheus:
     image: prom/prometheus
     volumes:
@@ -108,6 +103,9 @@ services:
       - "${PROMETHEUS_PORT}:${PROMETHEUS_PORT}"
     networks:
       - main # <== Placing traefik on the network named main, to access containers on this network
+    labels:
+      - "traefik.enable=true" # <== Enable traefik to proxy this container
+      - "traefik.http.middlewares.prometheus-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
   grafana:
     image: grafana/grafana:latest
     container_name: monitoring_grafana
