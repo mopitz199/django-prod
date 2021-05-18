@@ -95,6 +95,11 @@ services:
       - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.port=${PORT}"
       - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.timeout=2s"
       - "traefik.http.services.load-balancer-service.loadbalancer.healthcheck.interval=60s"
+
+      - "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolalloworiginlist=http://grafana.laconga.work"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.testheader.headers.addvaryheader=true"
   prometheus:
     image: prom/prometheus
     volumes:
