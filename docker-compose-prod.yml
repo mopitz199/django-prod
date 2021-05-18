@@ -109,7 +109,7 @@ services:
       - "traefik.http.routers.prometheus-router.entrypoints=prometheus-entrypoint" # <== Defining entrypoint for https
       - "traefik.http.routers.prometheus-router.middlewares=prometheus-middleware"
 
-      - "traefik.http.middlewares.prometheus-middleware.chain.middlewares=prometheus-cors-middleware,prometheus-basi-auth-middleware"
+      - "traefik.http.middlewares.prometheus-middleware.chain.middlewares=prometheus-basi-auth-middleware,prometheus-cors-middleware"
 
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST"
       - "traefik.http.middlewares.prometheus-cors-middleware.headers.accesscontrolalloworiginlist=*"
