@@ -107,8 +107,8 @@ services:
       - "traefik.enable=true" # <== Enable traefik to proxy this container
       - "traefik.http.routers.prometheus-router.rule=Host(`${DOMAIN}`)" # <== Your Domain Name for the https rule 
       - "traefik.http.routers.prometheus-router.entrypoints=prometheus-entrypoint" # <== Defining entrypoint for https
-      - "traefik.http.routers.prometheus-router.middlewares=prometheus-middleware"
-      - "traefik.http.middlewares.prometheus-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
+      # - "traefik.http.routers.prometheus-router.middlewares=prometheus-middleware"
+      # - "traefik.http.middlewares.prometheus-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
   grafana:
     image: grafana/grafana:latest
     container_name: monitoring_grafana
