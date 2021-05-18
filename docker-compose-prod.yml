@@ -15,6 +15,7 @@ services:
       - "80:80" # <== http
       - "8080:8080" # <== :8080 is where the dashboard runs on
       - "443:443" # <== https
+      - "9090:9090"
     command:
     #### These are the CLI commands that will configure Traefik and tell it how to work! ####
       ## API Settings - https://docs.traefik.io/operations/api/, endpoints - https://docs.traefik.io/operations/api/#endpoints ##
@@ -31,6 +32,7 @@ services:
       ## Entrypoints Settings - https://docs.traefik.io/routing/entrypoints/#configuration ##
       - --entrypoints.server-entrypoint.address=:80 # <== Defining an entrypoint for port :80 named web
       - --entrypoints.server-secured-entrypoint.address=:443 # <== Defining an entrypoint for https on port :443 named web-secured
+      - --entrypoints.prometheus-entrypoint.address=:9090 # <== Defining an entrypoint for https on port :443 named web-secured
       ## Certificate Settings (Let's Encrypt) -  https://docs.traefik.io/https/acme/#configuration-examples ##
       - --certificatesresolvers.tls-certificate-resolver.acme.tlschallenge=true # <== Enable TLS-ALPN-01 to generate and renew ACME certs
       - --certificatesresolvers.tls-certificate-resolver.acme.email=mopitz199@gmail.com # <== Setting email for certs
@@ -99,12 +101,13 @@ services:
     image: prom/prometheus
     volumes:
       - ./prometheus/:/etc/prometheus
-    ports:
-      - "${PROMETHEUS_PORT}:${PROMETHEUS_PORT}"
     networks:
       - main # <== Placing traefik on the network named main, to access containers on this network
     labels:
       - "traefik.enable=true" # <== Enable traefik to proxy this container
+      - "traefik.http.routers.prometheus-router.rule=Host(`${DOMAIN}`)" # <== Your Domain Name for the https rule 
+      - "traefik.http.routers.prometheus-router.entrypoints=prometheus-entrypoint" # <== Defining entrypoint for https
+      - "traefik.http.routers.prometheus-router.middlewares=prometheus-middleware"
       - "traefik.http.middlewares.prometheus-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
   grafana:
     image: grafana/grafana:latest
