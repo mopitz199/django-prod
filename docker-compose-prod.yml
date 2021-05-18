@@ -111,6 +111,7 @@ services:
       - "traefik.http.middlewares.prometheus-middleware.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST"
       - "traefik.http.middlewares.prometheus-middleware.headers.accesscontrolalloworiginlist=*"
       - "traefik.http.middlewares.prometheus-middleware.headers.accesscontrolalloworigin=*"
+      - "traefik.http.middlewares.prometheus-middleware.headers.accesscontrolallowheaders=*"
       - "traefik.http.middlewares.prometheus-middleware.headers.accesscontrolmaxage=100"
       - "traefik.http.middlewares.prometheus-middleware.headers.addvaryheader=true"
       - "traefik.http.middlewares.prometheus-middleware.basicauth.users=max:$$apr1$$n7ep9klb$$aEM7SYUnMbIpGSt914JaF/"
