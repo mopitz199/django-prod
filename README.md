@@ -12,6 +12,14 @@ All the environment variables will be hosted in just one place. To do so, some c
 
 <br>
 
+## Metrics infrastructure
+
+The metrics are built with *prometheus* and *grafana*. Were basically promtheus is in charge of collecting all the metric through the /metrics endpoint that the *backend* provide.
+
+Then the *grafana* service in connected to the *prometheus* server through the 9090 private port to has access to all the data and then be able to create dashboards.
+
+![alt text](readme_static/metrics_infrastructure.png)
+
 ## Media files
 
 We use the storages package to handle the media files
