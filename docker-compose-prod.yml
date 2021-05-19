@@ -127,10 +127,12 @@ services:
       - "traefik.enable=true" # <== Enable traefik to proxy this container
       - "traefik.http.routers.grafana-router.rule=Host(`grafana.${DOMAIN}`)" # <== Your Domain Name goes here for the http rule
       - "traefik.http.routers.grafana-router.entrypoints=server-entrypoint" # <== Defining the entrypoint for http, **ref: line 30
-      # - "traefik.http.routers.grafana-router.middlewares=redirect@file" # <== This is a middleware to redirect to https
-      # - "traefik.http.routers.grafana-secured-router.rule=Host(`grafana.${DOMAIN}`)" # <== Your Domain Name for the https rule 
-      # - "traefik.http.routers.grafana-secured-router.entrypoints=server-secured-entrypoint" # <== Defining entrypoint for https, **ref: line 31
-      # - "traefik.http.routers.grafana-secured-router.tls.certresolver=tls-certificate-resolver" # <== Defining certsresolvers for https
+
+      - "traefik.http.routers.grafana-secured-router.rule=Host(`grafana.${DOMAIN}`)" # <== Your Domain Name for the https rule 
+      - "traefik.http.routers.grafana-secured-router.entrypoints=server-secured-entrypoint" # <== Defining entrypoint for https, **ref: line 31
+      - "traefik.http.routers.grafana-secured-router.tls.certresolver=tls-certificate-resolver" # <== Defining certsresolvers for https
+      - "traefik.http.routers.grafana-router.middlewares=redirect@file" # <== This is a middleware to redirect to https
+      
 
 networks:
   main:
