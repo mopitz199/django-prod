@@ -105,8 +105,6 @@ services:
     image: grafana/grafana:latest
     container_name: monitoring_grafana
     restart: unless-stopped
-    ports:
-      - "${GRAFANA_PORT}:${GRAFANA_PORT}" # host.docker.internal
     links:
       - prometheus:prometheus
     volumes:
